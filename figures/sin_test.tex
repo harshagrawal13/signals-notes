@@ -16,15 +16,15 @@
   \draw[<->] (0,-1.5) -- (0,1.5) node[above] {\small $f(t)$};
 
   \foreach \y in {-1, 1} {
-    \draw (0.1,\y) -- (-0.1,\y) node[left] {\small $\y$};
-    \draw [gray, dashed] (2*pi,\y) -- (0,\y);
-  }
-  
+      \draw (0.1,\y) -- (-0.1,\y) node[left] {\small $\y$};
+      \draw [gray, dashed] (2*pi,\y) -- (0,\y);
+    }
+
   \foreach \i in {0.05, 0.10, ..., 2.0} {
       \pgfmathsetmacro{\x}{\i * pi}
       \draw[->] (\x, 0) -- (\x, {sin(\x r)});
-  };
- 
+    };
+
 \end{tikzpicture}
 \end{document}
 

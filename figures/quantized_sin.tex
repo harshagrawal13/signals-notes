@@ -16,18 +16,18 @@
   \draw[<->] (0,-1.5) -- (0,1.5) node[above] {\small $f(t)$};
 
   \foreach \y in {-1, 1} {
-    \draw (0.1,\y) -- (-0.1,\y) node[left] {\small $\y$};
-    \draw [gray, dashed] (2*pi,\y) -- (0,\y);
-  }
-  
-  \foreach \i in {0.125, 0.250, ..., 2.0} {
-    \pgfmathsetmacro{\x}{\i * pi}
-    \foreach \j in {0.000, 0.025, 0.050, ..., 0.125} {
-        \pgfmathsetmacro{\jx}{\j * pi}
-        \draw[->] (\x + \jx - 0.200, 0) -- (\x + \jx - 0.200, {sin((\x) r)});
+      \draw (0.1,\y) -- (-0.1,\y) node[left] {\small $\y$};
+      \draw [gray, dashed] (2*pi,\y) -- (0,\y);
     }
-};
- 
+
+  \foreach \i in {0.125, 0.250, ..., 2.0} {
+      \pgfmathsetmacro{\x}{\i * pi}
+      \foreach \j in {0.000, 0.025, 0.050, ..., 0.125} {
+          \pgfmathsetmacro{\jx}{\j * pi}
+          \draw[->] (\x + \jx - 0.200, 0) -- (\x + \jx - 0.200, {sin((\x) r)});
+        }
+    };
+
 \end{tikzpicture}
 \end{document}
 
