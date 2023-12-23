@@ -63,8 +63,6 @@
 \end{figure}
 
 \subsubsection*{Digital Signals \& Quantization}
-\textbf{Digital Signal}: A discrete time signal that is (often) sampled from a continuous analog signal such as figure\ref{fig:sampling_signal_quantized}. Digital signals are also often quantized. \\
-\textbf{Quantization}: When sampling a continuous signal, the amplitude of the signal is rounded to the nearest quantized level.
 
 \begin{figure}[!ht]
     \centering
@@ -72,6 +70,9 @@
     % or use \input{mytikz}
     \caption{Quantization of $\sin$ wave. This figure isn't a mathematically rigorous depiction as the quantization levels might not be equally spaced.}\label{fig:sampling_signal_quantized}
 \end{figure}
+
+\textbf{Digital Signal}: A discrete time signal that is (often) sampled from a continuous analog signal such as figure\ref{fig:sampling_signal_quantized}. Digital signals are also often quantized. \\
+\textbf{Quantization}: When sampling a continuous signal, the amplitude of the signal is rounded to the nearest quantized level.
 
 \textit{Quantization always implies \textbf{losing information} as the exact amplitude of the wave is lost while sampling at a given time interval.}
 
@@ -85,8 +86,8 @@ Depending on the property of prediction of signal beforehand, there are two cate
 \textbf{Periodic Signals}: A signal is termed periodic if it follows this property:
 
 \begin{equation}
-    \label{eq:periodic_signal_condition}
     x(t) = x(t + T) \quad \forall t
+    \label{eq:periodic_signal_condition}
 \end{equation}
 
 The signal should follow this for all values of $t$ (\textit{$\forall$ represents `for all`}). Here, $T$ = Period of the signal. Similarly, for a discrete signal: \(x[n] = x[n + N]\).
@@ -147,8 +148,8 @@ The complex plane is quite useful when dealing with two dimensions: the real dim
     \item \textbf{Exponential Form}: We can use Euler's relation, \(e^{j\cdot \theta} = \cos(\theta) + j\cdot \sin(\theta)\), to obtain the following equality from the above equation:
 
           \begin{equation}
-              \label{eq:euler_complex_no}
               \Vec{z} = x + j\cdot y = |z|(\cos(\theta) + j\cdot \sin(\theta)) = |z|\cdot e^{j\cdot \theta}
+              \label{eq:euler_complex_no}
           \end{equation}
 
 
@@ -195,7 +196,7 @@ However, here N can only be an integer, thus $\omega_0$ also needs to be a fract
 This also tells us that in the discrete-time domain, frequencies can't be arbitrarily increased from $0 \to +\infty$ to increase the rotation speed. They can only be sampled from a given domain. If we go any faster, we won't be able to distinguish the additional speed. Eg: when the wheel of a car goes too fast, we can't identify its speed.
 
 \subsubsection*{Example Calculation of Energy \& Power}
-Let's calculate the energy for a complex signal $x(t) = e^{j{\omega_0}t}$  and $\omega_0$ = angular frequency for the range $-\infty < t < \infty$. We can use the mathematical definition of energy for a continuous-time signal from eq.\ref{eq:cont_time_energy} as follows:
+Let's calculate the energy for a complex signal $x(t) = e^{j{\omega_0}t}$  and $\omega_0$ = angular frequency for the range $-\infty < t < \infty$. We can use the mathematical definition of energy for a continuous-time signal from eq. \ref{eq:cont_time_energy} as follows:
 
 \[\text{Energy}\ =\ \int_{-\infty}^{\infty}\left|x\left(t\right)\right|^{2}\cdot dt\]
 
@@ -301,6 +302,7 @@ What this equation intuitively tells us is that you can construct a discrete-tim
 
 Another paraphrase: \textit{Any arbitrary discrete-time signal can be expressed as the sum of scaled and delayed impulses}.
 
+\newpage
 \subsubsection*{Unit Step}
 A unit step in the discrete-time domain is defined as:
 
@@ -322,4 +324,60 @@ We can also note the following property:
 \[\delta [n] = u[n] - u[n-1]\]
 
 This means that the unit impulse is the discrete-time derivative of the unit step. Here, since 1 unit is the smallest increment in x, $dx = 1$, and $dy = u[n] - u[n] - 1$.
+
+Similar to the unit step in the discrete time, we can define a unit step in the continuous time domain as:
+\[u(t) =
+    \begin{cases}
+        1, & t > 0 \\
+        0, & t < 0
+    \end{cases}\]
+
+\begin{figure}[!ht]
+    \centering
+    \includestandalone[width=0.6\textwidth]{figures/unit_step_cont_domain}
+    \caption{A unit step, $u(t)$ in continous-time}\label{fig:unit_step_cont_dom}
+\end{figure}
+
+As we can see from figure \ref{fig:unit_step_cont_dom}, the unit step is discontinuous at $t=0$. This discontunity is an issue in the continuous time domain as the unit step mentioned above is not \textbf{formally differentiable}.
+
+In order to calculate that we define another signal: $u_{\Delta}(t)$ as follows:
+
+\begin{figure}[!ht]
+    \centering
+    \includestandalone[width=0.6\textwidth]{figures/unit_step_diff_cont}
+    \caption{Modified unit step, $u_{\Delta}(t)$ in continuous-time}\label{fig:unit_step_cont_dom_delta}
+\end{figure}
+
+Now if we take the derivative of the above signal, we obtain:
+\begin{figure}[!ht]
+    \centering
+    \includestandalone[width=0.6\textwidth]{figures/derivative_unit_step_cont}
+    \caption{Derivative of modified unit step, $u_{\Delta}(t)$ in continuous-time}\label{fig:derivative_unit_step_cont}
+\end{figure}
+
+We can see that the derivative plot resembles a unit impulse ($\therefore du_{\Delta}(t) = \delta_{\Delta}(t)$). However, unlike the unit impulse in discrete time which is of infintesimally small duration, this unit impulse has a duration of size $\Delta$. If $\Delta$ decreases, $\frac{1}{\Delta}$ increases; however, the area under the unit impulse remains constant and equals to 1. This can be mathematical represented by:
+
+\[\int_{-\infty}^{+\infty}\delta_{\Delta}(t)\cdot dt = 1, \quad \forall \Delta\]
+
+We can define the unit impulse in the continuous time domain ($\delta(t)$) as a limit of the unit impulse we obtained from the modified unit step ($\delta_{\Delta}(t)$) as $\Delta \to 0$:
+
+\[\delta(t) = \lim_{\Delta \to 0} \delta_{\Delta}(t) = \begin{cases}
+        0,      & \forall t \neq 0 \\
+        \neq 0, & t = 0
+    \end{cases}\]
+
+\textit{Explaination: As we decrease $\Delta$, $\frac{1}{\Delta}$ continues to increase till the point where $\delta_{\Delta}(t) \approx \infty$ and $t + dt \approx t$.}
+
+By our original definition, the area under the unit impulse is still 1.
+
+\[\int_{-\infty}^{+\infty}\delta(t)\cdot dt = 1\]
+
+This is strange because the integral of a function whose base $\approx$ 0 should be 0 but in our case is 1. That's why the unit impulse we defined above is not a function but a \textbf{distribution} and should be graphically denoted with an arrow instead of a line as follows:
+
+\begin{figure}[!ht]
+    \centering
+    \includestandalone[width=0.6\textwidth]{figures/unit_step_distribution}
+    \caption{Unit Impulse Distribution representation in continous-time domain.}\label{fig:unit_step_distribution}
+\end{figure}
+
 \end{document}
