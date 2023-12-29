@@ -3,6 +3,7 @@
 \usepackage{amsmath, amssymb}  % improve math presentation
 \usepackage{graphicx} % takes care of graphics including machinery
 \usepackage[margin=1in,letterpaper]{geometry} % decreases margins
+\usepackage{caption}
 \usepackage{cite} % takes care of citations
 \usepackage[final]{hyperref} % adds hyperlinks inside the generated pdf file
 \hypersetup{
@@ -16,6 +17,9 @@
 \usepackage{amsfonts}
 \usepackage{tikz}
 \usepackage{standalone}
+
+
+\captionsetup[figure]{justification=centering}
 %++++++++++++++++++++++++++++++++++++++++
 
 
@@ -57,7 +61,7 @@
 
 \begin{figure}
     \centering
-    \includestandalone[width=0.8\textwidth]{figures/sin_test}%     without .tex extension
+    \includestandalone[width=0.8\textwidth]{figures/lecture_1/sin_test}%     without .tex extension
     % or use \input{mytikz}
     \caption{Sampling of a continuous signal $f(t) = \sin(t)$}\label{fig:sampling_signal}
 \end{figure}
@@ -66,7 +70,7 @@
 
 \begin{figure}[!ht]
     \centering
-    \includestandalone[width=0.8\textwidth]{figures/quantized_sin}%     without .tex extension
+    \includestandalone[width=0.8\textwidth]{figures/lecture_1/quantized_sin}%     without .tex extension
     % or use \input{mytikz}
     \caption{Quantization of $\sin$ wave. This figure isn't a mathematically rigorous depiction as the quantization levels might not be equally spaced.}\label{fig:sampling_signal_quantized}
 \end{figure}
@@ -130,7 +134,7 @@ The complex plane is quite useful when dealing with two dimensions: the real dim
 
           \begin{figure}[!ht]
               \centering
-              \includestandalone[width=0.5\textwidth]{figures/vector}%     without .tex extension
+              \includestandalone[width=0.5\textwidth]{figures/lecture_1/vector}%     without .tex extension
               % or use \input{mytikz}
               \caption{Vector representation of the generic complex number \(\Vec{z} = x + j\cdot y\).}\label{fig:signal_vector_graph}
           \end{figure}
@@ -235,6 +239,7 @@ We can say that complex exponentials are \textbf{signals with infinity energy}. 
 
 From the above, we can say that complex exponentials are \textbf{signals with finite energy and equals to 1}.
 
+\newpage
 \subsection*{Unit Impulse \& Unit Step}
 \subsubsection*{Unit Impulse}
 In the discrete time domain, the unit impulse is the simplest signal, defined as follows:
@@ -248,7 +253,7 @@ In the discrete time domain, the unit impulse is the simplest signal, defined as
 
 \begin{figure}[!ht]
     \centering
-    \includestandalone[width=0.8\textwidth]{figures/unit_impulse}
+    \includestandalone[width=0.8\textwidth]{figures/lecture_1/unit_impulse}
     \caption{A unit impulse, $\delta[n]$ centered at n=0}\label{fig:unit_impulse}
 \end{figure}
 
@@ -263,7 +268,7 @@ Similarly, the discrete-time impulse delayed by the integer k is:
 
 \begin{figure}[!ht]
     \centering
-    \includestandalone[width=0.8\textwidth]{figures/unit_impulse_off_center}
+    \includestandalone[width=0.8\textwidth]{figures/lecture_1/unit_impulse_off_center}
     \caption{A unit impulse, $\delta[n-k]$ off-centered at k}
     \label{fig:unit_impulse_off_center}
 \end{figure}
@@ -315,7 +320,7 @@ A unit step in the discrete-time domain is defined as:
 
 \begin{figure}[!ht]
     \centering
-    \includestandalone[width=0.8\textwidth]{figures/unit_step}
+    \includestandalone[width=0.8\textwidth]{figures/lecture_1/unit_step}
     \caption{A unit step, $u[n]$}\label{fig:unit_step}
 \end{figure}
 
@@ -334,7 +339,7 @@ Similar to the unit step in the discrete time, we can define a unit step in the 
 
 \begin{figure}[!ht]
     \centering
-    \includestandalone[width=0.6\textwidth]{figures/unit_step_cont_domain}
+    \includestandalone[width=0.6\textwidth]{figures/lecture_2/unit_step_cont_domain}
     \caption{A unit step, $u(t)$ in continous-time}\label{fig:unit_step_cont_dom}
 \end{figure}
 
@@ -344,14 +349,14 @@ In order to calculate that we define another signal: $u_{\Delta}(t)$ as follows:
 
 \begin{figure}[!ht]
     \centering
-    \includestandalone[width=0.6\textwidth]{figures/unit_step_diff_cont}
+    \includestandalone[width=0.6\textwidth]{figures/lecture_2/unit_step_diff_cont}
     \caption{Modified unit step, $u_{\Delta}(t)$ in continuous-time}\label{fig:unit_step_cont_dom_delta}
 \end{figure}
 
 Now if we take the derivative of the above signal, we obtain:
 \begin{figure}[!ht]
     \centering
-    \includestandalone[width=0.6\textwidth]{figures/derivative_unit_step_cont}
+    \includestandalone[width=0.6\textwidth]{figures/lecture_2/derivative_unit_step_cont}
     \caption{Derivative of modified unit step, $u_{\Delta}(t)$ in continuous-time}\label{fig:derivative_unit_step_cont}
 \end{figure}
 
@@ -376,8 +381,43 @@ This is strange because the integral of a function whose base $\approx$ 0 should
 
 \begin{figure}[!ht]
     \centering
-    \includestandalone[width=0.6\textwidth]{figures/unit_step_distribution}
+    \includestandalone[width=0.5\textwidth]{figures/lecture_2/unit_step_distribution}
     \caption{Unit Impulse Distribution representation in continous-time domain.}\label{fig:unit_step_distribution}
 \end{figure}
+
+Similarly, a unit impulse in the continous time domain off-centered at $t=t_{0}$ looks like:
+
+\begin{figure}[!ht]
+    \centering
+    \includestandalone[width=0.5\textwidth]{figures/lecture_2/unit_impulse_cont_off_centered}
+    \caption{Unit Impulse Distribution representation in continous-time domain off-centered at $t=t_{0}$.}\label{fig:unit_impulse_cont_off_centered}
+\end{figure}
+
+Now, if we try and obtain the product of the unit impulse, $\delta(t)$, with a generic signal, $x(t)$, in continous time, we can first calculate the product of the generic signal with our modified unit impulse, $\delta_{\Delta}(t)$, in continous time:
+
+\[x(t)\cdot \delta_{\Delta}(t) \approx x(0)\cdot \delta_{\Delta}(t)\]
+
+\textit{This is because the modified unit impulse is only non-zero at the region of $\Delta$ which is $\approx 0$}. To convert the modified unit impulse to a standard unit impulse, we can take the limit $\Delta \to 0$:
+
+\[\lim_{\Delta \to 0} x(t) \cdot \delta_{\Delta}(t) = x(0) \cdot \lim_{\Delta \to 0} \delta_{\Delta}(t) = x(0) \cdot \delta(t)\]
+
+Here, the amplitude of the $\delta(t)$ is infinite, but the product (or area) is still = 1. Mathematically,
+
+\begin{equation*}
+    \begin{aligned}
+        \int_{t=-\infty}^{+\infty} x(0) \cdot \delta(t) \cdot dt & = x(0) \cdot \int_{t=-\infty}^{+\infty} \delta(t) \cdot dt \\
+                                                                 & = x(0)                                                     \\
+    \end{aligned}
+\end{equation*}
+
+\textit{Note: Even though the amplitude of $\delta(t)$ is infinite, when multiplied with a generic signal and integrated gives the area = 1 as per our definition.}
+
+Interestingly, we have come to the same conclusion for the product of unit impulse with a generic signal in the continous time domain as we did in the discrete time domain.
+\[x[n] \cdot \delta[n] = x[0] \cdot \delta[n], \quad \text{(Discrete Time)}\]
+\[x(t) \cdot \delta(t) = x(0) \cdot \delta(t), \quad \text{(Continuos Time)}\]
+
+We can continue the generalization for the product of a generic signal with a unit impulse off-centered at $t=t_{0}$ in the continous time domain:
+
+\[x(t) \cdot \delta(t-t_{0}) = x(t_{0}) \cdot \delta(t-t_{0})\]
 
 \end{document}
