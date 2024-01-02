@@ -578,6 +578,58 @@ We can extend this concept to signals by defining the \textbf{similarity} betwee
 \[\frac{<x_1(t), x_2(t)>}{\| x_1(t) \|_2 \cdot \| x_2(t) \|_2}\quad \text{(Continous Time)}\]
 \[\frac{<x_1[n], x_2[n]>}{\| x_1[n] \|_2 \cdot \| x_2[n] \|_2}\quad \text{(Discrete Time)}\]
 
+TODO:ADD INFO ABOUT CROSS-CORRELATION FUNCTION AND MSE.
+
+\subsection*{Orthonormal Basis Functions}
+We are quite familiar with the concept of Orthonormal basis functions. For example, 3-d vectors can be expressed as a linear combination of the 3 orthonormal vectors: $\Vec{i}$, $\Vec{j}$, $\Vec{k}$.
+These Orthonormal vectors (or basis functions) have the following property:
+
+\[<\Vec{i} \cdot \Vec{j}> = 0\]
+\[<\Vec{i} \cdot \Vec{i}> = 1\]
+
+We previously obtained a similar results for signal deconstruction into a linear sum of unit impulses:
+
+\begin{align*}
+    x[n]                  & = \sum_{k=-\infty}^{+\infty} x[k] \cdot \delta [n-k]                   \\ \\
+    \annot{Where, }                                                                                \\
+    \annot{$x[n]$}        & = \annot{Discrete Time Signal}                                         \\
+    \annot{$x[k]$}        & = \annot{Projection of signal x into the basis function $\delta[n-k]$} \\
+    \annot{$\delta[n-k]$} & = \annot{An orthonormal basis function.}
+\end{align*}
+
+Here, we can call $\delta[n-k]$ an orthonormal basis function because it satisfies both of the criterias we listed above:
+\[\delta[n-k_{1}] \cdot \delta[n-k_{2}] = 0\]
+\[\delta[n-k] \cdot \delta[n-k] = 1\]
+
+This is true because a unit impulse is only non-zero at one value and thus at either $n=k_{1}$ or $n=k_{2}$, the delta function = 0.
+
+Simply put, the above relation for discrete time signals is the projection of the signal into it's orthonormal basis functions of infinite dimensions (\textit{assuming the the original signal is of infinite length}).
+
+Following, the above we can define a new set of orthonormal basis functions such that:
+\[{\{\varphi_{i}(t)\}}^{N}_{i=1} = <\varphi_{i}(t), \varphi_{k}(t)> = \begin{cases}
+        0, & i \neq k \\
+        1, & i = k
+    \end{cases}
+\]
+
+Now, to say that a given signal belongs to the space of these basis functions, we should be able to completely describe the signal as a linear combination of these basis functions. For example, a signal $x(t)$ can be expressed as:
+
+\begin{align*}
+    x(t)              & = \sum_{i=1}^{N} a_{i} \cdot \varphi_{i} \\
+    \annot{And, } a_k & = <x(t), \varphi_{k}(t)>
+\end{align*}
+
+Here, $\varphi_{k}(t)$ is one of the set of orthonormal basis functions and $a_{k}$ is the projection of the signal $x(t)$ into the basis function $\varphi_{k}(t)$ or the co-efficient of multiplication. $a_{k}$ can be be both real or complex.
+
+\textit{Note: The reason we obtain the co-efficient by taking the dot product with that basis function is to ensure that everything equates to 0 except for that particular signal basis function dimension $x_{k}(t)$. This is only possible if the basis functions are \textbf{orthonormal}.}
+
+Similar to vectors $a_{i} \cdot \varphi_{i}(t)$ gives the best approximation of $x(t)$ in the space of the basis functions $\varphi_{i}(t)$. For an arbitrary n-d signal, its best approximation in, let's say, any given 3 dimensions will be:
+
+\[{x}_{3d} = a_{1}\cdot \varphi_{1}(t) + a_{2}\cdot \varphi_{2}(t) + a_{3}\cdot \varphi_{3}(t)\]
+
+Kindly checkout the Additional Information section on `Digital Modulation using Orthonormal Basis Functions' for a practical example of orthonormal basis functions.
+
+
 \newpage
 \subsection*{Properties of Fourier Transforms}
 \subsubsection*{Property of Duality}
