@@ -1,6 +1,6 @@
 \documentclass[letterpaper,12pt]{article}
 \usepackage{tabularx} % extra features for tabular environment
-\usepackage{amsmath, amssymb}  % improve math presentation
+\usepackage{amsmath, amssymb, mathtools}  % improve math presentation
 \usepackage{graphicx} % takes care of graphics including machinery
 \usepackage[margin=1in,letterpaper]{geometry} % decreases margins
 \usepackage{caption}
@@ -17,11 +17,19 @@
 \usepackage{amsfonts}
 \usepackage{tikz}
 \usepackage{standalone}
+\usepackage{xcolor}
 
-
+\definecolor{darkgray}{gray}{0.3}
+% \newcommand{\annot}[1]{{\textcolor{darkgray}{\textit{#1}}}}
+\newcommand{\annot}[1]{\textcolor{darkgray}{\textit{#1}}}
 \captionsetup[figure]{justification=centering}
 %++++++++++++++++++++++++++++++++++++++++
 
+\renewcommand{\footnoterule}{%
+  \kern-3pt % space above the rule
+  \hrule width \textwidth height 0.4pt
+  \kern5pt % space below the rule
+}
 
 \begin{document}
 
@@ -101,12 +109,12 @@ For a continuous-time signal, $x(t)$ for $t_1 \le t \le t_2$, The Energy (E) of 
 
 \begin{equation}
     \label{eq:cont_time_energy}
-    E\ =\ \int_{t_{1}}^{t_{2}}\left|x\left(t\right)\right|^{2}\cdot dt
+    E\ :=\ \int_{t_{1}}^{t_{2}}\left|x\left(t\right)\right|^{2}\cdot dt
 \end{equation}
 
 \begin{equation}
     \label{eq:cont_time_power}
-    P\ =\ \frac{1}{t_{2}-t_{1}}\int_{t_{1}}^{t_{2}}\left|x\left(t\right)\right|^{2}\cdot dt
+    P\ :=\ \frac{1}{t_{2}-t_{1}}\int_{t_{1}}^{t_{2}}\left|x\left(t\right)\right|^{2}\cdot dt
 \end{equation}
 
 Similarly, for a discrete-time signal $x[n]$ for $n_1 \le n \le n_2$, The Energy (E) of the signal and Power (P) are defined as:
@@ -244,7 +252,7 @@ From the above, we can say that complex exponentials are \textbf{signals with fi
 \subsubsection*{Unit Impulse}
 In the discrete time domain, the unit impulse is the simplest signal, defined as follows:
 
-\[\delta[n] =
+\[\delta[n] :=
     \begin{cases}
         1, & n = 0    \\
         0, & n \neq 0
@@ -299,7 +307,7 @@ If we arbitrarily change the variables and assume $n \rightleftharpoons k$, we o
 But since the unit pulse = 1 at n=k (or k=n), $\delta[k-n] = \delta[n-k]$. In both situations, when k=n, $\delta[n-k]$ = $\delta[n-k]$ (equal to 1 when n = k, equal to 0 when n $\neq$ k). So:
 
 \begin{equation}
-    \label{eq:sum_unit_pulse}
+    \label{eq:sum_unit_pulse_discrete_time}
     x[n] = \sum_{k=-\infty}^{+\infty} x[k] \cdot \delta[n-k]
 \end{equation}
 
@@ -412,6 +420,7 @@ Here, the amplitude of the $\delta(t)$ is infinite, but the product (or area) is
 
 \textit{Note: Even though the amplitude of $\delta(t)$ is infinite, when multiplied with a generic signal and integrated gives the area = 1 as per our definition.}
 
+\vspace{0.5cm}
 Interestingly, we have come to the same conclusion for the product of unit impulse with a generic signal in the continous time domain as we did in the discrete time domain.
 \[x[n] \cdot \delta[n] = x[0] \cdot \delta[n], \quad \text{(Discrete Time)}\]
 \[x(t) \cdot \delta(t) = x(0) \cdot \delta(t), \quad \text{(Continuos Time)}\]
@@ -420,4 +429,208 @@ We can continue the generalization for the product of a generic signal with a un
 
 \[x(t) \cdot \delta(t-t_{0}) = x(t_{0}) \cdot \delta(t-t_{0})\]
 
+We evaluate the integral of the above equation with respect to $t$ utilizing the relation derived above:
+
+\begin{align*}
+    \int_{t=-\infty}^{+\infty} x(t) \cdot \delta(t-t_{0})\cdot dt & = \int_{t=-\infty}^{+\infty} x(t_{0}) \cdot \delta(t-t_{0})\cdot dt \\
+                                                                  & =x(t_{0})\int_{t=-\infty}^{+\infty} \delta(t-t_{0})\cdot dt         \\
+    \intertext{\annot{Since $\delta(t-t_0) = 1$ at $t=t_{0}$, the integral evaluates to 1.}}
+                                                                  & = x(t_{0})
+    \\
+    \annot{Substituting $t_{0}=t$, and $t=\tau$,}
+    \\
+    x(t)                                                          & = \int_{-\infty}^{+\infty} x(\tau) \cdot \delta(\tau-t)\cdot d\tau  \\
+                                                                  & \annot{*Note: $ (\tau-t) = (t-\tau)$}
+\end{align*}
+
+Similar to eq.~\ref{eq:sum_unit_pulse_discrete_time}, we now have a relation for the continous time domain:
+
+\begin{equation}
+    \label{eq:sum_unit_pulse_cont_time}
+    x(t) = \int_{\tau=-\infty}^{+\infty} x(\tau) \cdot \delta(\tau-t)\cdot d\tau
+\end{equation}
+
+\subsection*{Convolution}
+We define \textbf{convolution}\footnote{*Note: Convolution $\neq$ Multiplication} or \textbf{convolutional product} as a new operator defined by the symbol `$*$' between two generic signals as:
+
+\begin{equation}
+    x(t) * h(t) := \int_{-\infty}^{+\infty} x(\tau) \cdot h(t-\tau)\cdot d\tau \quad \text{(Continous Time)}
+    \label{eq:convolution_continous_time}
+\end{equation}
+
+\begin{equation}
+    x[n] * h[n] := \sum_{-\infty}^{+\infty} x[k] \cdot h[t-k] \quad \text{(Discrete Time)}
+    \label{eq:convolution_discrete_time}
+\end{equation}
+
+Let's utilizing eq.~\ref{eq:sum_unit_pulse_cont_time} and eq.~\ref{eq:sum_unit_pulse_discrete_time}, and our defintion of convolution, we can obtain the convolutional product of a generic signal with a unit impulse for both discrete and continous time domains:
+
+\begin{equation}
+    x(t) * \delta(t) = x(t)
+    \label{eq:convolution_unit_impulse_cont_time}
+\end{equation}
+
+\begin{equation}
+    x[n] * \delta[n] = x[n]
+    \label{eq:convolution_unit_impulse_discrete_time}
+\end{equation}
+
+By extension for arbitrary delays (k for discrete time, $t_{0}$ for continous time), we have:
+
+\begin{equation}
+    x(t - t_{0}) = x(t) * \delta(t - t_{0})
+    \label{eq:convolution_unit_impulse_cont_time_delayed}
+\end{equation}
+
+\begin{equation}
+    x[n - k] = x[n] * \delta[n - k]
+    \label{eq:convolution_unit_impulse_discrete_time_delayed}
+\end{equation}
+
+\subsection*{Scalar Product and Norm of Signals}
+
+Before we define the scalar product and norm for signals, let's recap the definition of scalar product and norm for vectors.
+
+We know that for two arbitrary 3-D vectors $\Vec{A}$ \& $\Vec{B}$, their scalar product is given by:
+
+\[\Vec{A} \cdot \Vec{B} = A_{x}\cdot B_{x} + A_{y}\cdot B_{y} + A_{z}\cdot B_{z}\]
+
+Moreover, the projection of $\Vec{A}$ in x-axis $A_{x}$ is also obtained by the scalar product of $\Vec{A}$ with the unit vector $\Vec{i}$ in the x-axis:
+
+\[A_{x} = \Vec{A}\cdot \Vec{i}\]
+
+\textbf{Norm-2}: The norm-2 of the vector is defined as the euclidean length (or magnitude) of the vector.
+\[\| \Vec{A} \|_2 = \sqrt{\Vec{A} \cdot \Vec{A}} = \sqrt{A_{x}^2 + A_{y}^2 + A_{z}^2}\]
+
+We can thus extend the definition of scalar product as follows:
+\[\Vec{A}\cdot\Vec{B} = \| \Vec{A} \|_2 \cdot \| \Vec{B} \|_2\ \cdot \cos(\theta) \quad \text{\annot{\{$\theta$ = angle between $\Vec{A}$ and $\Vec{B}$\}}}\]
+
+We can similarly define the scalar product between two discrete-time signals using the notation: $<\cdot>$ as:
+
+\begin{equation}
+    \label{eq:scalar_product_discrete_time}
+    <x_{1}[n], x_{2}[n]> = \sum_{n=-\infty}^{+\infty} x_{1}[n] \cdot x_{2}^{*}[n]
+\end{equation}
+
+% TODO: Add explaination for the complex conjugate
+\textit{\textbf{Note:} The $*$ in the above equation (above $x_{2}$) denotes the complex conjugate of the signal. For real signals, the complex conjugate is the same as the original signal. See the supplementary information section on`Magnitude of the Vector' for explaination.}
+
+\vspace{0.5cm}
+
+\subsubsection*{Scalar Product and Norm for Discrete-Time Signals}
+
+We can also define the \textbf{norm-2} of a discrete-time signal as:
+
+\begin{equation}
+    \begin{aligned}
+        \| x[n] \|_2 & = \sqrt{<x[n], x[n]>}                                                                                       \\
+                     & = \sqrt{\sum_{n=-\infty}^{+\infty} x[n] \cdot x^{*}[n]}                                                     \\
+                     & = \sqrt{\sum_{n=-\infty}^{+\infty}|x[n]|^{2}}                                                               \\
+                     & = \sqrt{\text{Energy}}                                  & \annot{\text{From eq.~\ref{eq:disc_time_energy}}}
+    \end{aligned}
+    \label{eq:norm_discrete_time}
+\end{equation}
+
+Norm-2 is another way to characterize the intensity of a signal.\textit{ Dividing the signal by its norm-2 implies normalizing the signal to its norm-2.}
+
+We can further extend the definition of norm-2 to \textbf{norm-p}  for a discrete-time signal as follows:
+
+\begin{equation}
+    \label{eq:norm_p_discrete_time}
+    \| x[n] \|_p := {(\sum_{n=-\infty}^{+\infty} |x[n]|^{p})}^{\frac{1}{p}} \quad 1 \leq p < \infty
+\end{equation}
+
+For example, the norm-1 of a discrete-time signal is given by:
+
+\[\| x[n] \|_1 = \sum_{n=-\infty}^{+\infty} |x[n]| \]
+
+The infinite or max norm is given by:
+
+\[\| x[n] \|_\infty = \underset{n}{\text{max}} |x[n]| \]
+
+\subsubsection*{Scalar Product and Norm for Continuos-Time Signals}
+
+Similar to eq.~\ref{eq:scalar_product_discrete_time}, we can define the scalar product between two continous-time signals as:
+\begin{equation}
+    \label{eq:scalar_product_cont_time}
+    <x_{1}(t), x_{2}(t)> := \int_{t=-\infty}^{+\infty} x_{1}(t) \cdot x_{2}^{*}(t) \cdot dt
+\end{equation}
+
+We can also define the \textbf{norm-2} of a continous-time signal as:
+\begin{equation}
+    \label{eq:norm_2_cont_time}
+    \| x(t) \|_2 = \sqrt{<x(t), x(t)>} = \sqrt{\int_{t=-\infty}^{+\infty} x(t) \cdot x^{*}(t) \cdot dt}
+\end{equation}
+
+And \textbf{norm-p} (1 $\leq$ p) as:
+\begin{equation}
+    \label{eq:norm_p_cont_time}
+    \| x(t) \|_p = {(\int_{t=-\infty}^{+\infty} |x(t)|^{p} \cdot dt)}^{\frac{1}{p}}
+\end{equation}
+
+\subsection*{Similarity Between Signals}
+In case of vectors, we can measure there similarity by obtaining the cosine of the angle between the vectors.
+\[\cos(\phi) = \frac{\Vec{A} \cdot \Vec{B}}{A \cdot B}\]
+
+If we have two identical vectors, the cosine of the angle between them would be 1. Similarily, if we have two orthogonal vectors, the cosine of the angle between them would be 0.
+
+We can extend this concept to signals by defining the \textbf{similarity} between two signals as their normalized scalar product:
+\[\frac{<x_1(t), x_2(t)>}{\| x_1(t) \|_2 \cdot \| x_2(t) \|_2}\quad \text{(Continous Time)}\]
+\[\frac{<x_1[n], x_2[n]>}{\| x_1[n] \|_2 \cdot \| x_2[n] \|_2}\quad \text{(Discrete Time)}\]
+
+\newpage
+\subsection*{Properties of Fourier Transforms}
+\subsubsection*{Property of Duality}
+
+The Duality Property tells us that if $x(t)$ has a Fourier Transform $X(\omega)$, then if we form a new function of time that has the functional form of the transform, $X(t)$, it will have a Fourier Transform $x(\omega)$ that has the functional form of the original time function (but is a function of frequency) as described mathematically below\footnote{Taken from https://class.ece.uw.edu/235dl/EE235/Project/lesson16/lesson16.html}. The Duality property is very useful because it can enable to solve Fourier Transforms that would be difficult to compute directly.
+
+\[ \text{If, } \mathcal{F}\{x(t)\} = X(j\omega)\]
+\[ \text{then, } \mathcal{F}\{X(t)\} = 2\pi\cdot x(-\omega)\]
+
+For example, last time we calculated that the Fourier Transform of a unit impulse = 1 ($\mathcal{F}\{\delta(t)\}\ = 1$). We can use the duality property to calculate the Fourier Transform of a constant function, $X(t) = 1$:
+
+\begin{equation*}
+    \begin{aligned}
+        \mathcal{F}\{1\} & = 2\pi\cdot\delta(-\omega)                                                         \\
+                         & = 2\pi\cdot\delta(\omega) \quad [\text{$\because \delta(t) = 0$ apart from $t=0$}]
+    \end{aligned}
+\end{equation*}
+
+\textit{Check another example of the application of the dual property for $x(t) = \delta(t + t_{0})$ in the supplementary notes.}
+
+\subsubsection*{Proof of the Duality Property}
+\textbf{Shift to Additional Information too until you find a good proof.}
+We know from the definition of the duality property the following relation:
+
+\[\mathcal{F}\{x(t)\} = X(j\omega) \quad \rightarrow \quad \mathcal{F}\{X(t)\} = 2\pi\cdot x(-\omega)\]
+
+The prove the dual relation, we can calculate the Inverse Fourier Transform of the $2\pi\cdot x(-\omega)$ term:
+
+\begin{equation*}
+    \begin{aligned}
+        \mathcal{F}^{-1}\{2\pi\cdot x(-\omega)\} & = \frac{1}{2\pi}\int_{-\infty}^{+\infty}2\pi\cdot x\left(-\omega\right)\cdot e^{j\omega t}\cdot d\omega                                                \\
+                                                 & = \frac{2\pi}{2\pi}\int_{-\infty}^{+\infty}\cdot x\left(-\omega\right)\cdot e^{j\omega t}\cdot d\omega                                                 \\
+        \annot{Let, $u = -\omega$ and $du=-d\omega$}                                                                                                                                                      \\
+                                                 & = 1+ 1                                                                                                  & \annot{Let, $u = -\omega$ and $du=-d\omega$}
+    \end{aligned}
+\end{equation*}
+
+\newpage
+\section*{Additional Information}
+\subsubsection*{Magnitude of a Vector}\label{sec:magnitude_vector}
+
+Let's take a generic complex number, $z = a + jb$. The complex conjugate of this complex number is given by:
+
+\[z^{*} = a - jb\]
+
+If we obtain the product between the complex number and its complex conjugate, we obtain:
+
+\begin{align*}
+    z\cdot z^{*} & = (a + jb)\cdot (a - jb) \\
+                 & = a^2 + b^2              \\
+                 & = |z|^2
+    \label{eq:complex_conjugate}
+\end{align*}
+
+Thus, the use of the complex conjugate is essential in obtaining the magnitude of a complex number because as you can notice, the product of z by itself would not result in $a^2 + b^2$.
 \end{document}
