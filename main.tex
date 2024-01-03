@@ -505,11 +505,11 @@ Moreover, the projection of $\Vec{A}$ in x-axis $A_{x}$ is also obtained by the 
 We can thus extend the definition of scalar product as follows:
 \[\Vec{A}\cdot\Vec{B} = \| \Vec{A} \|_2 \cdot \| \Vec{B} \|_2\ \cdot \cos(\theta) \quad \text{\annot{\{$\theta$ = angle between $\Vec{A}$ and $\Vec{B}$\}}}\]
 
-We can similarly define the scalar product between two discrete-time signals using the notation: $<\cdot>$ as:
+We can similarly define the scalar product between two discrete-time signals using the notation: $\langle \cdot \rangle$ as:
 
 \begin{equation}
     \label{eq:scalar_product_discrete_time}
-    <x_{1}[n], x_{2}[n]> = \sum_{n=-\infty}^{+\infty} x_{1}[n] \cdot x_{2}^{*}[n]
+    \langle x_{1}[n], x_{2}[n] \rangle = \sum_{n=-\infty}^{+\infty} x_{1}[n] \cdot x_{2}^{*}[n]
 \end{equation}
 
 % TODO: Add explaination for the complex conjugate
@@ -523,7 +523,7 @@ We can also define the \textbf{norm-2} of a discrete-time signal as:
 
 \begin{equation}
     \begin{aligned}
-        \| x[n] \|_2 & = \sqrt{<x[n], x[n]>}                                                                                       \\
+        \| x[n] \|_2 & = \sqrt{\langle x[n], x[n] \rangle}                                                                         \\
                      & = \sqrt{\sum_{n=-\infty}^{+\infty} x[n] \cdot x^{*}[n]}                                                     \\
                      & = \sqrt{\sum_{n=-\infty}^{+\infty}|x[n]|^{2}}                                                               \\
                      & = \sqrt{\text{Energy}}                                  & \annot{\text{From eq.~\ref{eq:disc_time_energy}}}
@@ -553,13 +553,13 @@ The infinite or max norm is given by:
 Similar to eq.~\ref{eq:scalar_product_discrete_time}, we can define the scalar product between two continous-time signals as:
 \begin{equation}
     \label{eq:scalar_product_cont_time}
-    <x_{1}(t), x_{2}(t)> := \int_{t=-\infty}^{+\infty} x_{1}(t) \cdot x_{2}^{*}(t) \cdot dt
+    \langle x_{1}(t), x_{2}(t) \rangle := \int_{t=-\infty}^{+\infty} x_{1}(t) \cdot x_{2}^{*}(t) \cdot dt
 \end{equation}
 
 We can also define the \textbf{norm-2} of a continous-time signal as:
 \begin{equation}
     \label{eq:norm_2_cont_time}
-    \| x(t) \|_2 = \sqrt{<x(t), x(t)>} = \sqrt{\int_{t=-\infty}^{+\infty} x(t) \cdot x^{*}(t) \cdot dt}
+    \| x(t) \|_2 = \sqrt{\langle x(t), x(t) \rangle} = \sqrt{\int_{t=-\infty}^{+\infty} x(t) \cdot x^{*}(t) \cdot dt}
 \end{equation}
 
 And \textbf{norm-p} (1 $\leq$ p) as:
@@ -575,8 +575,8 @@ In case of vectors, we can measure there similarity by obtaining the cosine of t
 If we have two identical vectors, the cosine of the angle between them would be 1. Similarily, if we have two orthogonal vectors, the cosine of the angle between them would be 0.
 
 We can extend this concept to signals by defining the \textbf{similarity} between two signals as their normalized scalar product:
-\[\frac{<x_1(t), x_2(t)>}{\| x_1(t) \|_2 \cdot \| x_2(t) \|_2}\quad \text{(Continous Time)}\]
-\[\frac{<x_1[n], x_2[n]>}{\| x_1[n] \|_2 \cdot \| x_2[n] \|_2}\quad \text{(Discrete Time)}\]
+\[\frac{\langle x_1(t), x_2(t) \rangle}{\| x_1(t) \|_2 \cdot \| x_2(t) \|_2}\quad \text{(Continous Time)}\]
+\[\frac{\langle x_1[n], x_2[n] \rangle}{\| x_1[n] \|_2 \cdot \| x_2[n] \|_2}\quad \text{(Discrete Time)}\]
 
 TODO:ADD INFO ABOUT CROSS-CORRELATION FUNCTION AND MSE.
 
@@ -584,8 +584,8 @@ TODO:ADD INFO ABOUT CROSS-CORRELATION FUNCTION AND MSE.
 We are quite familiar with the concept of Orthonormal basis functions. For example, 3-d vectors can be expressed as a linear combination of the 3 orthonormal vectors: $\Vec{i}$, $\Vec{j}$, $\Vec{k}$.
 These Orthonormal vectors (or basis functions) have the following property:
 
-\[<\Vec{i} \cdot \Vec{j}> = 0\]
-\[<\Vec{i} \cdot \Vec{i}> = 1\]
+\[\langle \Vec{i} \cdot \Vec{j} \rangle = 0\]
+\[\langle \Vec{i} \cdot \Vec{i} \rangle = 1\]
 
 We previously obtained a similar results for signal deconstruction into a linear sum of unit impulses:
 
@@ -606,7 +606,7 @@ This is true because a unit impulse is only non-zero at one value and thus at ei
 Simply put, the above relation for discrete time signals is the projection of the signal into it's orthonormal basis functions of infinite dimensions (\textit{assuming the the original signal is of infinite length}).
 
 Following, the above we can define a new set of orthonormal basis functions such that:
-\[{\{\varphi_{i}(t)\}}^{N}_{i=1} = <\varphi_{i}(t), \varphi_{k}(t)> = \begin{cases}
+\[{\{\varphi_{i}(t)\}}^{N}_{i=1} = \langle \varphi_{i}(t), \varphi_{k}(t)\rangle = \begin{cases}
         0, & i \neq k \\
         1, & i = k
     \end{cases}
@@ -616,7 +616,7 @@ Now, to say that a given signal belongs to the space of these basis functions, w
 
 \begin{align*}
     x(t)              & = \sum_{i=1}^{N} a_{i} \cdot \varphi_{i} \\
-    \annot{And, } a_k & = <x(t), \varphi_{k}(t)>
+    \annot{And, } a_k & = \langle x(t), \varphi_{k}(t)\rangle
 \end{align*}
 
 Here, $\varphi_{k}(t)$ is one of the set of orthonormal basis functions and $a_{k}$ is the projection of the signal $x(t)$ into the basis function $\varphi_{k}(t)$ or the co-efficient of multiplication. $a_{k}$ can be be both real or complex.
@@ -629,6 +629,52 @@ Similar to vectors $a_{i} \cdot \varphi_{i}(t)$ gives the best approximation of 
 
 Kindly checkout the Additional Information section on `Digital Modulation using Orthonormal Basis Functions' for a practical example of orthonormal basis functions.
 
+\subsection*{Fourier Basis functions}
+We define a special set of orthnormal basis functions to encompass periodic functions. We call them the fourier basis functions and mathematically define them as follows:
+
+\begin{align*}
+    \varphi_{k}(t)            & = \frac{1}{\sqrt{T}}\cdot e^{j\frac{2\pi}{T}k t} \quad \forall \; 0 \leq t < T \\
+    \annot{Where, }                                                                                            \\
+    \annot{$j$}               & = \annot{$\sqrt{-1}$}                                                          \\
+    \annot{$e$}               & = \annot{Complex exponential function}                                         \\
+    \annot{$T$}               & = \annot{Period of the function}
+    \\
+    \annot{$\frac{2 \pi}{T}$} & = \omega_{0} = \annot{Fundamental frequency of the function}
+    \\
+    \annot{$k$}               & = \annot{Harmonic number or multiplicative factor. $k \in\mathbb{Z}$}
+\end{align*}
+
+Here, we can deduce the following properties of the fourier basis functions:
+
+\begin{itemize}
+    \item Each basis function is complex exponential (harmonic) oscilating with multiple of the fundamental frequency, $\omega_{0}$.
+    \item As the Fundamental frequency is increased, the Period of the function decreases.
+    \item This infinite set of functions is orthonormal for the interval $0 \leq t < T$.
+\end{itemize}
+
+\subsubsection*{Proof of Orthonormality of Fourier Basis Functions}
+To demonstrate orthonormality, we need to prove:
+\[\langle \varphi_{i}(t), \varphi_{k}(t) \rangle = 0, \quad i\neq k \]
+
+\[\langle \varphi_{i}(t), \varphi_{k}(t) \rangle = 1, \quad i = k \]
+
+By the defintion of scalar product of signals defined above, we can write:
+\begin{align*}
+    \langle \varphi_{i}(t), \varphi_{k}(t) \rangle                  & = \int_{t=0}^{T} \varphi_{i}(t) \cdot \varphi_{k}^{*}(t) \cdot dt                                                     \\
+                                                                    & = \int_{0}^{T}(\frac{1}{\sqrt{T}} e^{j\frac{2\pi}{T}i t}) \cdot (\frac{1}{\sqrt{T}} e^{-j\frac{2\pi}{T}k t}) \cdot dt \\
+                                                                    & = \frac{1}{T} \int_{0}^{T} e^{j\frac{2\pi}{T}(i-k) t} \cdot dt                                                        \\
+    \annot{\{As, $\int e^{ax}\cdot dx = \frac{1}{a}\cdot e^{ax}$\}} &                                                                                                                       \\
+                                                                    & =  [\frac{1}{T}\cdot\frac{1}{j\cdot\frac{2\pi}{T}\cdot (i-k)}]\cdot {[e^{j (\frac{2\pi}{t}) (i-k)t}]}^{T}_{0}         \\
+    \annot{At $t=T$:}                                               &                                                                                                                       \\
+    \annot{$e^{j \frac{2 \pi}{T} (i-k) T}$}                         & = \annot{$e^{j 2\pi(i-k)}$}                                                                                           \\
+                                                                    & = \annot{$\cos(2\pi(i-k)) + j\cdot \sin(2\pi(i-k))$}                                                                  \\
+                                                                    & = \annot{$1 \quad \{\because \sin(2\pi n) = 0, \cos(2\pi n) = 1 \quad \forall n \in \mathbb{Z}\}$}                    \\
+    \annot{At $t=0$:}                                               &                                                                                                                       \\
+    \annot{$e^{j \frac{2 \pi}{T} (i-k) 0}$}                         & = \annot{$1$}                                                                                                         \\ \\
+    \annot{Plugging back to the integral,}                          &                                                                                                                       \\
+    \langle \varphi_{i}(t), \varphi_{k}(t) \rangle                  & = [\frac{1}{T}\cdot\frac{1}{j\cdot\frac{2\pi}{T}\cdot (i-k)}]\cdot (1 - 1)                                            \\
+                                                                    & = 0
+\end{align*}
 
 \newpage
 \subsection*{Properties of Fourier Transforms}
